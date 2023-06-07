@@ -1,35 +1,33 @@
 import {
-  BelongsTo,
   Column,
   DataType,
-  ForeignKey,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
-import { Empleado } from 'src/empleados/entities/empleado.entity';
+import { Caja } from 'src/cajas/entities/caja.entity';
 
 @Table({ timestamps: true })
-export class User extends Model {
+export class Moneda extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
   id: string;
 
   @Column
-  alias: string;
+  nombre: string;
 
   @Column
-  password: string;
+  abreviatura: string;
+
+  @Column
+  simbolo: string;
 
   @Column(DataType.CHAR)
   estado: string;
 
-  @ForeignKey(() => Empleado)
-  @Column
-  idempleado: string;
-
-  @BelongsTo(() => Empleado)
-  empleado: Empleado;
+  @HasMany(() => Caja)
+  cajas: Caja[];
 
   @Column
   usuarioregistro: string;

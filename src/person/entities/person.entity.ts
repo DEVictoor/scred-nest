@@ -1,12 +1,21 @@
-import { Model } from 'sequelize';
-import { Column, DataType, PrimaryKey, Table } from 'sequelize-typescript';
+import {
+  Column,
+  DataType,
+  PrimaryKey,
+  Table,
+  Model,
+  Unique,
+  Comment,
+} from 'sequelize-typescript';
 
-@Table({ timestamps: true })
+@Table({ timestamps: true, modelName: 'Person' })
 export class Person extends Model {
   @PrimaryKey
-  @Column(DataType.UUIDV4)
+  @Column(DataType.UUID)
   id: string;
 
+  @Unique
+  @Comment('Test comentario')
   @Column(DataType.INTEGER)
   dni: number;
 

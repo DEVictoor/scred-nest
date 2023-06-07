@@ -1,15 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { Person } from './entities/person.entity';
 
 @Injectable()
 export class PersonService {
+  constructor(
+    @Inject('PERSON_REPO')
+    private personRepo: typeof Person,
+  ) {}
+
   create(createPersonDto: CreatePersonDto) {
     return 'This action adds a new person';
   }
 
-  findAll() {
-    return `This action returns all person`;
+  findAll(): Promise<Person[]> {
+    return this.personRepo.findAll<Person>();
   }
 
   findOne(id: number) {
