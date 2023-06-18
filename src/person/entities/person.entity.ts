@@ -6,18 +6,22 @@ import {
   Model,
   Unique,
   Comment,
+  AllowNull,
 } from 'sequelize-typescript';
 
-@Table({ timestamps: true, modelName: 'Person' })
+@Table({ timestamps: true })
 export class Person extends Model {
   @PrimaryKey
-  @Column(DataType.UUID)
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+  })
   id: string;
 
   @Unique
   @Comment('Test comentario')
-  @Column(DataType.INTEGER)
-  dni: number;
+  @Column(DataType.CHAR(8))
+  dni: string;
 
   @Column
   nombre: string;
@@ -37,9 +41,11 @@ export class Person extends Model {
   @Column
   estado: string;
 
+  @AllowNull
   @Column
   usuariomodificacion: string;
 
+  @AllowNull
   @Column
   usuarioregistro: string;
 }

@@ -3,11 +3,13 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
 import { Agencia } from 'src/agencias/entities/agencia.entity';
+import { Empleado } from 'src/empleados/entities/empleado.entity';
 import { Moneda } from 'src/monedas/entities/moneda.entity';
 
 @Table({ timestamps: true })
@@ -32,18 +34,21 @@ export class Caja extends Model {
   orden: number;
 
   @ForeignKey(() => Agencia)
-  @Column
+  @Column(DataType.UUID)
   idagencia: string;
 
   @BelongsTo(() => Agencia)
   agencia: Agencia;
 
   @ForeignKey(() => Moneda)
-  @Column
+  @Column(DataType.UUID)
   idmoneda: string;
 
   @BelongsTo(() => Moneda)
   moneda: Moneda;
+
+  @HasMany(() => Empleado)
+  empleados: Empleado[];
 
   @Column
   usuarioregistro: string;

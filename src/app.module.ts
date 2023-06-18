@@ -12,19 +12,21 @@ import { RolesModule } from './roles/roles.module';
 import { CajasModule } from './cajas/cajas.module';
 import { MonedasModule } from './monedas/monedas.module';
 import { AgenciasModule } from './agencias/agencias.module';
+import { SeedersModule } from './seeders/seeders.module';
 
 @Module({
   imports: [
+    DatabaseModule,
     AuthModule,
     UsersModule,
     ConfigModule.forRoot(ConfigModuleOpt),
-    DatabaseModule,
     PersonModule,
     EmpleadosModule,
     RolesModule,
     CajasModule,
     MonedasModule,
     AgenciasModule,
+    SeedersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

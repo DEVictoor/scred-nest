@@ -25,7 +25,7 @@ export class User extends Model {
   estado: string;
 
   @ForeignKey(() => Empleado)
-  @Column
+  @Column(DataType.UUID)
   idempleado: string;
 
   @BelongsTo(() => Empleado)

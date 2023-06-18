@@ -11,7 +11,10 @@ import { Caja } from 'src/cajas/entities/caja.entity';
 @Table({ timestamps: true })
 export class Moneda extends Model {
   @PrimaryKey
-  @Column(DataType.UUID)
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+  })
   id: string;
 
   @Column

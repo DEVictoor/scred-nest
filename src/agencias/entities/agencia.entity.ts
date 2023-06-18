@@ -15,14 +15,13 @@ export class Agencia extends Model {
   @Column(DataType.UUID)
   id: string;
 
-  @Column
+  @Column(DataType.TEXT)
   nombre: string;
 
-  @Column
+  @Column(DataType.TEXT)
   direccion: string;
 
   @Column(DataType.CHAR)
-  @Default('A')
   estado: string;
 
   @HasMany(() => Caja)

@@ -14,25 +14,27 @@ import { Role } from 'src/roles/entities/role.entity';
 @Table({ timestamps: true })
 export class Empleado extends Model {
   @PrimaryKey
-  @Column(DataType.UUID)
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+  })
   id: string;
 
-  @Column(DataType.CHAR)
-  @Default('A')
+  @Column(DataType.CHAR(1))
   estado: string;
 
-  @Column
+  @Column(DataType.CHAR(150))
   claveadmin: string;
 
   @ForeignKey(() => Role)
-  @Column
+  @Column(DataType.UUID)
   idrole: string;
 
   @BelongsTo(() => Role)
   role: Role;
 
   @ForeignKey(() => Caja)
-  @Column
+  @Column(DataType.UUID)
   idcaja: string;
 
   @BelongsTo(() => Caja)
