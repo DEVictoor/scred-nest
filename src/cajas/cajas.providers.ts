@@ -3,11 +3,7 @@ import { Caja } from './entities/caja.entity';
 
 export const CajasProviders = [
   {
-    provide: 'Caja_Repo',
+    provide: 'CAJA_REPO',
     useValue: Caja,
-  },
-  {
-    provide: 'Agencia_Repo',
-    useValue: Agencia,
   },
 ];

@@ -11,7 +11,12 @@ export class RolesService {
   ) {}
 
   async create(createRoleDto: CreateRoleDto): Promise<Role | null> {
-    return await this._repo.create({ ...createRoleDto });
+    // TODO: i have to add a intercepto for usuarioregistro and usuariomodificacion
+    return await this._repo.create({
+      ...createRoleDto,
+      usuarioregistro: 'SYSTEM',
+      usuariomodificacion: 'SYSTEM',
+    });
   }
 
   async findOneByNombre(nombre: string): Promise<Role | null> {

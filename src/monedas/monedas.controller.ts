@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MonedasService } from './monedas.service';
 import { CreateMonedaDto } from './dto/create-moneda.dto';
 import { UpdateMonedaDto } from './dto/update-moneda.dto';
@@ -19,7 +27,7 @@ export class MonedasController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.monedasService.findOne(+id);
+    return this.monedasService.findOne(id);
   }
 
   @Patch(':id')

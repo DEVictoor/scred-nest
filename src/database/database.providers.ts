@@ -31,7 +31,7 @@ export const DatabaseProviders = [
         User,
       ]);
 
-      await sequelize.sync();
+      await sequelize.sync({ alter: { drop: false } });
       // await sequelize.sync({ force: true });
       return sequelize;
     },

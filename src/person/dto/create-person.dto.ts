@@ -11,7 +11,7 @@ import { DniNotRegistered } from '../decorators/dni-not-registered.decorator';
 
 export class CreatePersonDto {
   @IsString({ message: 'El tipo de dato para el dni debe ser un string' })
-  @Length(8, 8, { message: 'El dni tiene que tener exactamente 8 digitos' })
+  // @Length(8, 8, { message: 'El dni tiene que tener exactamente 8 digitos' })
   @DniNotRegistered({
     message: 'Dni ya registrado, digite uno nuevo o edite el actual',
   })
@@ -31,9 +31,9 @@ export class CreatePersonDto {
   @IsOptional()
   apellido: string;
 
-  @IsPhoneNumber('PE' || 'US' || 'CH', {
-    message: ({ property }) => `Formato incorreto para ${property}`,
-  })
+  // @IsPhoneNumber('PE' || 'US' || 'CH', {
+  //   message: ({ property }) => `Formato incorreto para ${property}`,
+  // })
   @IsOptional()
   celular: string;
 
@@ -52,8 +52,8 @@ export class CreatePersonDto {
     message: ({ property }) =>
       `El valor de ${property} debe ser de tipo string`,
   })
-  @MinLength(1, { message: 'El numero minimo de caracteres es uno' })
-  @MaxLength(1, { message: 'El numero maximos de caracteres es uno' })
+  // @MinLength(1, { message: 'El numero minimo de caracteres es uno' })
+  // @MaxLength(1, { message: 'El numero maximos de caracteres es uno' })
   @IsOptional()
   estado: string;
 }

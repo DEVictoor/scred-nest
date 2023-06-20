@@ -11,6 +11,7 @@ export class PersonService {
   ) {}
 
   async create(createPersonDto: CreatePersonDto): Promise<Person> {
+    console.log(createPersonDto);
     const person = await this.personRepo.create({ ...createPersonDto });
     return person;
   }

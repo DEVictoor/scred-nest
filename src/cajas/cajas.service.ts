@@ -1,19 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateCajaDto } from './dto/create-caja.dto';
 import { UpdateCajaDto } from './dto/update-caja.dto';
+import { Caja } from './entities/caja.entity';
 
 @Injectable()
 export class CajasService {
-  create(createCajaDto: CreateCajaDto) {
-    return 'This action adds a new caja';
+  constructor(
+    @Inject('CAJA_REPO')
+    private readonly _model: typeof Caja,
+  ) {}
+
+  async create(createCajaDto: CreateCajaDto): Promise<Caja | null> {
+    return await this._model.create({ ...createCajaDto });
   }
 
   findAll() {
     return `This action returns all cajas`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} caja`;
+  async findOneByNombre(nombre: string): Promise<Caja | null> {
+    return await this._model.findOne({ where: { nombre } });
+  }
+
+  async findOne(id: string): Promise<Caja | null> {
+    return await this._model.findByPk(id);
   }
 
   update(id: number, updateCajaDto: UpdateCajaDto) {

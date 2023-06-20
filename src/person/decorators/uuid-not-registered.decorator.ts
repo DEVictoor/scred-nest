@@ -6,24 +6,24 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 
-@ValidatorConstraint({ name: 'IsDniNotRegistered', async: true })
-export class IsDniNotRegistered implements ValidatorConstraintInterface {
+@ValidatorConstraint({ name: 'IsIdPersonNotRegistered', async: true })
+export class IsIdPersonNotRegistered implements ValidatorConstraintInterface {
   constructor(private readonly _person: PersonService) {}
 
-  async validate(value: any) {
-    const person = await this._person.findOneByDni(value);
+  async validate(value: string) {
+    const person = await this._person.findOne(value);
     return person === null;
   }
 }
 
-export function DniNotRegistered(validateOptions?: ValidationOptions) {
+export function IdPersonNotRegistered(validateOptions?: ValidationOptions) {
   return function (obj: object, properyName: string) {
     registerDecorator({
       target: obj.constructor,
       propertyName: properyName,
       options: validateOptions,
       constraints: [],
-      validator: IsDniNotRegistered,
+      validator: IsIdPersonNotRegistered,
     });
   };
 }

@@ -10,8 +10,8 @@ export class EmpleadosService {
     private readonly _repo: typeof Empleado,
   ) {}
 
-  create(createEmpleadoDto: CreateEmpleadoDto) {
-    return 'This action adds a new empleado';
+  async create(createEmpleadoDto: CreateEmpleadoDto): Promise<Empleado | null> {
+    return await this._repo.create({ ...createEmpleadoDto });
   }
 
   findAll() {

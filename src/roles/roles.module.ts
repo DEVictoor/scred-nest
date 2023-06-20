@@ -8,7 +8,7 @@ import { IsNombreRegistered } from './decorators/nombre.decorator';
 @Module({
   imports: [DatabaseModule],
   controllers: [RolesController],
-  providers: [IsNombreRegistered, RolesService, ...RolesProviders],
+  providers: [RolesService, IsNombreRegistered, ...RolesProviders],
   exports: [RolesService],
 })
 export class RolesModule {}

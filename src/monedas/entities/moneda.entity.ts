@@ -5,6 +5,7 @@ import {
   Model,
   PrimaryKey,
   Table,
+  Unique,
 } from 'sequelize-typescript';
 import { Caja } from 'src/cajas/entities/caja.entity';
 
@@ -17,12 +18,15 @@ export class Moneda extends Model {
   })
   id: string;
 
+  @Unique
   @Column
   nombre: string;
 
+  @Unique
   @Column
   abreviatura: string;
 
+  @Unique
   @Column
   simbolo: string;
 

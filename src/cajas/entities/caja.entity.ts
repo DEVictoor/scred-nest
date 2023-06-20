@@ -1,4 +1,5 @@
 import {
+  AllowNull,
   BelongsTo,
   Column,
   DataType,
@@ -7,6 +8,7 @@ import {
   Model,
   PrimaryKey,
   Table,
+  Unique,
 } from 'sequelize-typescript';
 import { Agencia } from 'src/agencias/entities/agencia.entity';
 import { Empleado } from 'src/empleados/entities/empleado.entity';
@@ -15,9 +17,13 @@ import { Moneda } from 'src/monedas/entities/moneda.entity';
 @Table({ timestamps: true })
 export class Caja extends Model {
   @PrimaryKey
-  @Column(DataType.UUID)
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+  })
   id: string;
 
+  @Unique
   @Column
   nombre: string;
 
@@ -27,9 +33,11 @@ export class Caja extends Model {
   @Column(DataType.BOOLEAN)
   isOpen: boolean;
 
+  @AllowNull
   @Column(DataType.FLOAT)
   monto: number;
 
+  @AllowNull
   @Column(DataType.INTEGER)
   orden: number;
 
