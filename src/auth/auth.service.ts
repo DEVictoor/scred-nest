@@ -1,26 +1,32 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { compare } from 'bcrypt';
+import { UsersService } from 'src/users/users.service';
+import { LoginDto } from './dto/login-auth.dto';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(private readonly _user: UsersService, private _jwt: JwtService) {}
+
+  async validateUser(dto: LoginDto) {
+    const user = await this._user.findOneByUsername(dto.username);
+
+    if (!user)
+      throw new UnauthorizedException('No existe un usuario con ese username');
+
+    const isMatch = await compare(dto.password, user.password);
+
+    if (!isMatch) throw new ConflictException('El password es incorrecto');
+
+    return user;
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  login(user: any) {
+    const payload = { id: user.id };
+    return { access_token: this._jwt.sign(payload) };
   }
 }

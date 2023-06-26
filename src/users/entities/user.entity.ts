@@ -1,4 +1,5 @@
 import {
+  BeforeCreate,
   BelongsTo,
   Column,
   DataType,
@@ -6,23 +7,30 @@ import {
   Model,
   PrimaryKey,
   Table,
+  Unique,
 } from 'sequelize-typescript';
 import { Empleado } from 'src/empleados/entities/empleado.entity';
+import { Estado } from 'src/enums/estados';
+import * as bcrypt from 'bcrypt';
 
 @Table({ timestamps: true })
 export class User extends Model {
   @PrimaryKey
-  @Column(DataType.UUID)
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+  })
   id: string;
 
+  @Unique
   @Column
-  alias: string;
+  username: string;
 
   @Column
   password: string;
 
-  @Column(DataType.CHAR)
-  estado: string;
+  @Column(DataType.CHAR(1))
+  estado: Estado;
 
   @ForeignKey(() => Empleado)
   @Column(DataType.UUID)
@@ -36,4 +44,10 @@ export class User extends Model {
 
   @Column
   usuariomodificacion: string;
+
+  // Hooks
+  @BeforeCreate
+  static async hashPassword(instance: User) {
+    instance.password = await bcrypt.hash(instance.password, 10);
+  }
 }

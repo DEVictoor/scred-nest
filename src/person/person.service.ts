@@ -10,10 +10,15 @@ export class PersonService {
     private personRepo: typeof Person,
   ) {}
 
-  async create(createPersonDto: CreatePersonDto): Promise<Person> {
-    console.log(createPersonDto);
-    const person = await this.personRepo.create({ ...createPersonDto });
-    return person;
+  async create(createPersonDto: CreatePersonDto): Promise<Person | null> {
+    return await this.personRepo.create({ ...createPersonDto });
+  }
+
+  async findOrCreate(dto: CreatePersonDto): Promise<Person> {
+    const [persona, isCreated] = await this.personRepo.findOrCreate({
+      where: { ...dto },
+    });
+    return persona;
   }
 
   async createBulk(data: CreatePersonDto[]) {

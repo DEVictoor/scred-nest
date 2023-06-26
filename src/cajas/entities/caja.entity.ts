@@ -27,7 +27,7 @@ export class Caja extends Model {
   @Column
   nombre: string;
 
-  @Column(DataType.CHAR)
+  @Column(DataType.CHAR(1))
   estado: string;
 
   @Column(DataType.BOOLEAN)

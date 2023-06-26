@@ -10,7 +10,7 @@ export class CreateEmpleadoDto {
 
   @IsUUID('4', { message: 'El idrol no es un uuid' })
   @IdRoleNotRegistered({ message: 'No se encuentra el id para rol' })
-  idrol: string;
+  idrole: string;
 
   @IsUUID('4', { message: 'El id caja debe ser de tipo UUID' })
   @IdCajaRegistered({ message: 'El id caja no existe' })

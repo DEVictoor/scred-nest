@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AgenciasService } from 'src/agencias/agencias.service';
 import { CajasService } from 'src/cajas/cajas.service';
 import { EmpleadosService } from 'src/empleados/empleados.service';
+import { Estado } from 'src/enums/estados';
 import { MonedasService } from 'src/monedas/monedas.service';
 import { PersonService } from 'src/person/person.service';
 import { RolesService } from 'src/roles/roles.service';
@@ -20,61 +21,81 @@ export class SeedersService {
   ) {}
 
   async create() {
-    // Roles
-    const adminRole = await this._role.create({ nombre: 'admin' });
-    const cobradorRole = await this._role.create({ nombre: 'cobrador' });
-    const cajeroRole = await this._role.create({ nombre: 'cajero' });
-    const supervisorRole = await this._role.create({ nombre: 'supervisor' });
+    try {
+      // Roles
+      const adminRole = await this._role.findOrCreate({ nombre: 'admin' });
+      const cobradorRole = await this._role.findOrCreate({
+        nombre: 'cobrador',
+      });
+      const cajeroRole = await this._role.findOrCreate({ nombre: 'cajero' });
+      const supervisorRole = await this._role.findOrCreate({
+        nombre: 'supervisor',
+      });
 
-    // Monedas
-    const moneda_pen = await this._moneda.create({
-      nombre: 'Soles',
-      estado: 'A',
-      abreviatura: 'PEN',
-      simbolo: 'S/.',
-    });
+      // Monedas
+      const moneda_pen = await this._moneda.findOrCreate({
+        nombre: 'Soles',
+        estado: 'A',
+        abreviatura: 'PEN',
+        simbolo: 'S/.',
+      });
 
-    const moneda_dolar = await this._moneda.create({
-      nombre: 'Dolar americano',
-      estado: 'A',
-      abreviatura: 'USD',
-      simbolo: '$/.',
-    });
+      const moneda_dolar = await this._moneda.findOrCreate({
+        nombre: 'Dolar americano',
+        estado: 'A',
+        abreviatura: 'USD',
+        simbolo: '$/.',
+      });
 
-    // Agencias
-    const agencia_uno = await this._agencia.create({
-      nombre: 'Agencia Uno',
-      direccion: 'Direccion de la agencia uno',
-      estado: 'A',
-    });
+      // Agencias
+      const agencia_uno = await this._agencia.findOrCreate({
+        nombre: 'Agencia Uno',
+        direccion: 'Direccion de la agencia uno',
+        estado: 'A',
+      });
 
-    // Cajas
-    const caja_uno = await this._caja.create({
-      nombre: 'CAJA_UNO',
-      estado: 'A',
-      isOpen: false,
-      monto: 2000,
-      idmoneda: moneda_pen.id,
-      idagencia: agencia_uno.id,
-    });
+      // Cajas
+      const caja_uno = await this._caja.findOrCreate({
+        nombre: 'CAJA_UNO',
+        estado: 'A',
+        isOpen: false,
+        monto: 2000,
+        idmoneda: moneda_pen.id,
+        idagencia: agencia_uno.id,
+      });
 
-    const personCreadted = await this._person.create({
-      dni: '71238977',
-      correo: 'devictormireles@gmail.com',
-      estado: 'A',
-      nombre: 'Victor Fernando',
-      apellido: 'Mireles Bernabé',
-      celular: '955014274',
-      direccion: 'Direccion en la calle ',
-    });
+      const personCreated = await this._person.findOrCreate({
+        dni: '01234567',
+        correo: 'test@gmail.com',
+        estado: 'A',
+        nombre: 'Victor',
+        apellido: 'M',
+        celular: '912121212',
+        direccion: 'Direccion en la calle',
+      });
 
-    const empleado_test = await this._empleado.create({
-      estado: 'A',
-      idrol: adminRole.id,
-      idcaja: caja_uno.id,
-      idperson: personCreadted.id,
-    });
+      const empleado_test = await this._empleado.findOrCreate({
+        estado: 'A',
+        idrole: adminRole.id,
+        idcaja: caja_uno.id,
+        idperson: personCreated.id,
+      });
 
-    return empleado_test;
+      const user_test = await this._user.findOrCreate({
+        password: 'password',
+        username: 'ADMIN',
+        estado: Estado.HABILITADO,
+        idempleado: empleado_test.id,
+      });
+
+      return user_test;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(
+        { error: 'Sucedio un error con el seeder service' },
+        HttpStatus.FORBIDDEN,
+        { cause: error },
+      );
+    }
   }
 }

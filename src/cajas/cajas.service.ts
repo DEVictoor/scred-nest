@@ -14,6 +14,18 @@ export class CajasService {
     return await this._model.create({ ...createCajaDto });
   }
 
+  async findOrCreate(createCajaDto: CreateCajaDto): Promise<Caja> {
+    const [caja, isCreated] = await this._model.findOrCreate({
+      where: {
+        ...createCajaDto,
+        usuarioregistro: 'SYSTEM',
+        usuariomodificacion: 'SYSTEM',
+      },
+    });
+
+    return caja;
+  }
+
   findAll() {
     return `This action returns all cajas`;
   }

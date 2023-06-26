@@ -1,4 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { Caja } from 'src/cajas/entities/caja.entity';
+import { Person } from 'src/person/entities/person.entity';
+import { Role } from 'src/roles/entities/role.entity';
 import { CreateEmpleadoDto } from './dto/create-empleado.dto';
 import { UpdateEmpleadoDto } from './dto/update-empleado.dto';
 import { Empleado } from './entities/empleado.entity';
@@ -14,12 +17,20 @@ export class EmpleadosService {
     return await this._repo.create({ ...createEmpleadoDto });
   }
 
+  async findOrCreate(dto: CreateEmpleadoDto): Promise<Empleado> {
+    const [empleado, isCreated] = await this._repo.findOrCreate({
+      where: { ...dto },
+      include: [Role, Person, Caja],
+    });
+    return empleado;
+  }
+
   findAll() {
     return `This action returns all empleados`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} empleado`;
+  async findOne(id: string): Promise<Empleado | null> {
+    return await this._repo.findByPk(id);
   }
 
   update(id: number, updateEmpleadoDto: UpdateEmpleadoDto) {

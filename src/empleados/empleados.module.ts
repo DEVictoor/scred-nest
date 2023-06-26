@@ -9,6 +9,7 @@ import { IsIdRoleNotRegistered } from 'src/roles/decorators/idnotregistered.deco
 import { RolesModule } from 'src/roles/roles.module';
 import { IsIdCajaRegistered } from 'src/cajas/decorators/IsIdCajaRegistered.decorator';
 import { CajasModule } from 'src/cajas/cajas.module';
+import { IsIdEmpleadoRegistered } from './decorators/IsIdEmpleadoRegistered.decorator';
 
 @Module({
   imports: [DatabaseModule, PersonModule, RolesModule, CajasModule],
@@ -17,6 +18,7 @@ import { CajasModule } from 'src/cajas/cajas.module';
     IsIdPersonNotRegistered,
     IsIdCajaRegistered,
     IsIdRoleNotRegistered,
+    IsIdEmpleadoRegistered,
     EmpleadosService,
     ...EmpleadoProviders,
   ],

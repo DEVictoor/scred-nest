@@ -19,6 +19,18 @@ export class RolesService {
     });
   }
 
+  async findOrCreate(dto: CreateRoleDto): Promise<Role> {
+    const [role, isCreate] = await this._repo.findOrCreate({
+      where: {
+        ...dto,
+        usuarioregistro: 'SYSTEM',
+        usuariomodificacion: 'SYSTEM',
+      },
+    });
+
+    return role;
+  }
+
   async findOneByNombre(nombre: string): Promise<Role | null> {
     return await this._repo.findOne({ where: { nombre } });
   }

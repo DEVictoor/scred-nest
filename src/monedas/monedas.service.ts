@@ -14,6 +14,18 @@ export class MonedasService {
     return await this._model.create({ ...createMonedaDto });
   }
 
+  async findOrCreate(dto: CreateMonedaDto): Promise<Moneda> {
+    const [moneda, isCreated] = await this._model.findOrCreate({
+      where: {
+        ...dto,
+        usuarioregistro: 'SYSTEM',
+        usuariomodificacion: 'SYSTEM',
+      },
+    });
+
+    return moneda;
+  }
+
   async findAll(): Promise<Moneda[]> {
     return await this._model.findAll();
   }

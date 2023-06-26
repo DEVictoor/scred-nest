@@ -14,6 +14,18 @@ export class AgenciasService {
     return await this._model.create({ ...createAgenciaDto });
   }
 
+  async findOrCreate(dto: CreateAgenciaDto): Promise<Agencia> {
+    const [agencia] = await this._model.findOrCreate({
+      where: {
+        ...dto,
+        usuarioregistro: 'SYSTEM',
+        usuariomodificacion: 'SYSTEM',
+      },
+    });
+
+    return agencia;
+  }
+
   async findOneByNombre(nombre: string): Promise<Agencia | null> {
     return await this._model.findOne({ where: { nombre } });
   }
