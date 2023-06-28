@@ -36,4 +36,8 @@ lerna-debug.log*
 
 # orm config
 orm.config.json
+
+# environment variables
 .env
+.env.development
+.env.production
