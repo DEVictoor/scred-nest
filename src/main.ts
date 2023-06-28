@@ -8,19 +8,20 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Prefix
+  app.setGlobalPrefix('api/v1');
+
   // Swagger
   const config = new DocumentBuilder()
     .setTitle('Scred api document')
     .setDescription('The scred api description')
     .setVersion('1.0')
+    .addBearerAuth()
     .addTag('scred')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/v1/docs', app, document);
-
-  // Prefix
-  app.setGlobalPrefix('api/v1');
 
   // Pipe validation
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
