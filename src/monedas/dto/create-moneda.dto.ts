@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { AbreviaturaRegistered } from '../decorators/IsAbreviaturaRegistered.decorator';
 import { NombreNotRegistered } from '../decorators/IsNombreRegistered.decorator';
@@ -11,6 +12,7 @@ export class CreateMonedaDto {
   @NombreNotRegistered({
     message: 'Ese nombra para la moneda ya esta registrado eliga otro',
   })
+  @ApiProperty()
   nombre: string;
 
   @IsString({
@@ -22,14 +24,17 @@ export class CreateMonedaDto {
   @AbreviaturaRegistered({
     message: 'Esa abreviatura ya esta registrada, eliga otra',
   })
+  @ApiProperty()
   abreviatura: string;
 
   @IsString({ message: 'El simbolo debe ser de tipo string' })
   @IsNotEmpty({ message: 'El simbolor no puede estar vacio' })
   @SimboloRegistered({ message: 'El simbolor ya esta registrado. Eliga otro' })
+  @ApiProperty()
   simbolo: string;
 
   @IsString({ message: 'El estado debe ser de tipo string' })
   @IsNotEmpty({ message: 'El estado no debe estar vacio' })
+  @ApiProperty()
   estado: string;
 }

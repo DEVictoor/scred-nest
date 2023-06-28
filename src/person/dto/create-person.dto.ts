@@ -1,3 +1,4 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEmail,
   IsOptional,
@@ -15,6 +16,7 @@ export class CreatePersonDto {
   @DniNotRegistered({
     message: 'Dni ya registrado, digite uno nuevo o edite el actual',
   })
+  @ApiProperty()
   dni: string;
 
   @IsString({
@@ -22,6 +24,7 @@ export class CreatePersonDto {
       `El valor para ${property} debe ser de tipo string`,
   })
   @IsOptional()
+  @ApiPropertyOptional()
   nombre: string;
 
   @IsString({
@@ -29,16 +32,19 @@ export class CreatePersonDto {
       `El valor para ${property} debe ser de tipo string`,
   })
   @IsOptional()
+  @ApiPropertyOptional()
   apellido: string;
 
   // @IsPhoneNumber('PE' || 'US' || 'CH', {
   //   message: ({ property }) => `Formato incorreto para ${property}`,
   // })
   @IsOptional()
+  @ApiPropertyOptional()
   celular: string;
 
   @IsEmail({}, { message: 'Formato erroneo, digite un correo correcto' })
   @IsOptional()
+  @ApiPropertyOptional()
   correo: string;
 
   @IsString({
@@ -46,6 +52,7 @@ export class CreatePersonDto {
       `El valor de ${property} debe ser de tipo string`,
   })
   @IsOptional()
+  @ApiPropertyOptional()
   direccion: string;
 
   @IsString({
@@ -55,5 +62,6 @@ export class CreatePersonDto {
   // @MinLength(1, { message: 'El numero minimo de caracteres es uno' })
   // @MaxLength(1, { message: 'El numero maximos de caracteres es uno' })
   @IsOptional()
+  @ApiPropertyOptional()
   estado: string;
 }
