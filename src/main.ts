@@ -14,7 +14,7 @@ async function bootstrap() {
   // Swagger
   const config = new DocumentBuilder()
     .setTitle('Scred api document')
-    .setDescription('The scred api description')
+    .setDescription('Descripcion for nestjs app')
     .setVersion('1.0')
     .addBearerAuth()
     .addTag('scred')
